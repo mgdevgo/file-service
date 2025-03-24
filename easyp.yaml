@@ -1,0 +1,22 @@
+version: v2
+
+lint:
+  use:
+    - DEFAULT
+  enum_zero_value_suffix: _UNSPECIFIED
+
+deps:
+
+generate:
+  # inputs:
+  #   - directory: "./api/"
+  plugins:
+    - name: go
+      out: ./internal/
+      opts:
+        paths: source_relative
+
+    - name: go-grpc
+      out: ./internal/
+      opts:
+        paths: source_relative
