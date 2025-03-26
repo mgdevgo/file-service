@@ -1,3 +1,11 @@
+![Go Report](https://goreportcard.com/badge/github.com/mgdevgo/file-service)
+![Repository Top Language](https://img.shields.io/github/languages/top/mgdevgo/file-service)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/mgdevgo/file-service)
+![Github Repository Size](https://img.shields.io/github/repo-size/mgdevgo/file-service)
+![License](https://img.shields.io/badge/license-MIT-green)
+![GitHub last commit](https://img.shields.io/github/last-commit/mgdevgo/file-service)
+![GitHub contributors](https://img.shields.io/github/contributors/mgdevgo/file-service)
+
 # file-service
 
 ## How to run
