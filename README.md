@@ -2,8 +2,23 @@
 
 ## How to run
 
-```bash
+Create `.env` file
+
+```shell
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
+FILES_UPLOAD_PATH=./uploads
+```
+
+Run locally
+
+```shell
 make run
+```
+
+Run in Docker
+
+```shell
+docker-compose up --build
 ```
 
 ## Requirements
@@ -20,8 +35,19 @@ make run
 
 ## Architecture overview
 
+![Architecture overview](./docs/architecture.png)
+
+## Service description
+
+Метаданные файлов сохраняются в базе данных PostgreSQL. 
+
+Метаданные включают уникальный идентификатор файла (UUID), имя файла, хэш содержимого, дату создания и дату обновления.
+
+Файлы сохраняются на жесткий диск в директорию, указанную в переменной окружения `FILES_UPLOAD_PATH`. Для организации хранения файлов используется подход `content-addressable storage`. 
+
 ## What can be improved
 
-## Demo
+- Добавить кэширование файлов
+- Добавить возможность скачивать файлы по частям
 
 
