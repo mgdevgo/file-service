@@ -2,10 +2,12 @@ package postgres
 
 import (
 	"context"
+	"errors"
 	"log/slog"
 
 	pgxtx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"file-service/internal/file"
@@ -80,6 +82,9 @@ func (s *FileMetaStorage) FindById(ctx context.Context, id uuid.UUID) (*file.Fil
 	var meta file.FileMeta
 	err := db.QueryRow(ctx, query, id).Scan(&meta.ID, &meta.Filename, &meta.Hash, &meta.CreatedAt, &meta.UpdatedAt)
 	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, file.ErrFileNotFound
+		}
 		return nil, err
 	}
 	return &meta, nil

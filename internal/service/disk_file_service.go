@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -50,10 +51,16 @@ func NewDiskFileService(uploadPath string, metaRepo file.FileMetaRepository, tra
 }
 
 func (service *DiskFileService) UploadFile(ctx context.Context, fileName string, fileData []byte) (string, error) {
-	meta := file.NewFileMeta(uuid.New(), fileName, fileData)
-	file := file.NewFile(fileData, meta)
+	meta, err := file.NewFileMeta(uuid.New(), fileName, fileData)
+	if err != nil {
+		return "", err
+	}
+	file, err := file.NewFile(fileData, meta)
+	if err != nil {
+		return "", err
+	}
 
-	err := service.transaction.Do(ctx,
+	if err := service.transaction.Do(ctx,
 		func(ctx context.Context) error {
 			if err := service.meta.Save(ctx, &file.Meta); err != nil {
 				return err
@@ -65,9 +72,7 @@ func (service *DiskFileService) UploadFile(ctx context.Context, fileName string,
 
 			return nil
 		},
-	)
-
-	if err != nil {
+	); err != nil {
 		return "", err
 	}
 
@@ -94,7 +99,7 @@ func createFilePath(base, hash string) string {
 func (service *DiskFileService) DownloadFile(ctx context.Context, fileId string) (string, []byte, error) {
 	fileUUID, err := uuid.Parse(fileId)
 	if err != nil {
-		return "", nil, err
+		return "", nil, file.ErrFileIdEmpty
 	}
 
 	meta, err := service.meta.FindById(ctx, fileUUID)
@@ -105,6 +110,9 @@ func (service *DiskFileService) DownloadFile(ctx context.Context, fileId string)
 	filePath := createFilePath(service.uploadPath, meta.Hash)
 	data, err := os.ReadFile(filePath)
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return "", nil, file.ErrFileNotFound
+		}
 		return "", nil, err
 	}
 
