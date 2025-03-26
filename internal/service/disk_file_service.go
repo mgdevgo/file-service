@@ -19,24 +19,34 @@ const (
 
 	READ_TIMEOUT     = 15 * time.Second
 	SHUTDOWN_TIMEOUT = 15 * time.Second
+
+	DEFAULT_FILES_UPLOAD_PATH = "./uploads"
 )
 
 type DiskFileService struct {
 	api.UnimplementedFileServiceServer
 
-	storagePath string
+	uploadPath  string
 	meta        file.FileMetaRepository
 	transaction *tx.Manager
 	logger      *slog.Logger
 }
 
-func NewDiskFileService(storagePath string, metaRepo file.FileMetaRepository, transaction *tx.Manager, logger *slog.Logger) *DiskFileService {
+func NewDiskFileService(uploadPath string, metaRepo file.FileMetaRepository, transaction *tx.Manager, logger *slog.Logger) (*DiskFileService, error) {
+	if uploadPath == "" {
+		uploadPath = DEFAULT_FILES_UPLOAD_PATH
+	}
+
+	if err := os.MkdirAll(uploadPath, 0755); err != nil {
+		return nil, err
+	}
+
 	return &DiskFileService{
-		storagePath: storagePath,
+		uploadPath:  uploadPath,
 		meta:        metaRepo,
 		transaction: transaction,
 		logger:      logger,
-	}
+	}, nil
 }
 
 func (service *DiskFileService) UploadFile(ctx context.Context, fileName string, fileData []byte) (string, error) {
@@ -65,7 +75,7 @@ func (service *DiskFileService) UploadFile(ctx context.Context, fileName string,
 }
 
 func (service *DiskFileService) writeToDisk(ctx context.Context, file *file.File) error {
-	path := filepath.Join(service.storagePath, file.Meta.Hash[:2], file.Meta.Hash[2:4], file.Meta.Hash)
+	path := createFilePath(service.uploadPath, file.Meta.Hash)
 	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
 		return err
 	}
@@ -75,6 +85,10 @@ func (service *DiskFileService) writeToDisk(ctx context.Context, file *file.File
 	}
 
 	return nil
+}
+
+func createFilePath(base, hash string) string {
+	return filepath.Join(base, hash[:2], hash[2:4], hash)
 }
 
 func (service *DiskFileService) DownloadFile(ctx context.Context, fileId string) (string, []byte, error) {
@@ -88,7 +102,7 @@ func (service *DiskFileService) DownloadFile(ctx context.Context, fileId string)
 		return "", nil, err
 	}
 
-	filePath := filepath.Join(service.storagePath, meta.Filename)
+	filePath := createFilePath(service.uploadPath, meta.Hash)
 	data, err := os.ReadFile(filePath)
 	if err != nil {
 		return "", nil, err

@@ -41,7 +41,11 @@ func main() {
 	transaction := tx.Must(pgxtx.NewDefaultFactory(db))
 
 	metaStorage := postgres.NewFileMetaStorage(db, pgxtx.DefaultCtxGetter, logger)
-	fileService := service.NewDiskFileService(os.Getenv("STORAGE_PATH"), metaStorage, transaction, logger)
+	fileService, err := service.NewDiskFileService(os.Getenv("FILES_UPLOAD_PATH"), metaStorage, transaction, logger)
+	if err != nil {
+		logger.Error("failed to create file service", "error", err)
+		os.Exit(1)
+	}
 
 	fileServer := server.NewFileServer(fileService)
 	limiter := ratelimit.NewRequestLimiter()
