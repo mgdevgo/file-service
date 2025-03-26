@@ -13,7 +13,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func New(ctx context.Context, URL string) (*pgxpool.Pool, error) {
+func New(ctx context.Context, URL string, migrationsPath string) (*pgxpool.Pool, error) {
 	const op = "storage.postgres.New"
 
 	pool, err := pgxpool.New(ctx, URL)
@@ -28,17 +28,17 @@ func New(ctx context.Context, URL string) (*pgxpool.Pool, error) {
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
 
-	if err := applyMigrations(URL); err != nil {
+	if err := applyMigrations(URL, migrationsPath); err != nil {
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
 
 	return pool, nil
 }
 
-func applyMigrations(URL string) error {
+func applyMigrations(URL string, migrationsPath string) error {
 	const op = "storage.postgres.applyMigrations"
 	m, err := migrate.New(
-		"file://migrations",
+		"file://"+migrationsPath,
 		strings.Replace(URL, "postgres://", "pgx5://", 1),
 	)
 	if err != nil {

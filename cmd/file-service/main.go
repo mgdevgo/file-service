@@ -31,7 +31,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	db, err := postgres.New(ctx, os.Getenv("DATABASE_URL"))
+	db, err := postgres.New(ctx, os.Getenv("DATABASE_URL"), os.Getenv("MIGRATIONS_PATH"))
 	if err != nil {
 		logger.Error("failed to connect to database", "error", err)
 		os.Exit(1)
