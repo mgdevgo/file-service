@@ -1,4 +1,4 @@
-module tages-go
+module file-service
 
 go 1.24.1
 

@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"tages-go/internal/file"
+	"file-service/internal/file"
 )
 
 type FileMetaStorage struct {

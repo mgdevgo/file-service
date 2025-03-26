@@ -10,8 +10,8 @@ import (
 	tx "github.com/avito-tech/go-transaction-manager/trm/v2/manager"
 	"github.com/google/uuid"
 
-	"tages-go/internal/api"
-	"tages-go/internal/file"
+	"file-service/internal/api"
+	"file-service/internal/file"
 )
 
 const (

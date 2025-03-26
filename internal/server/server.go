@@ -3,8 +3,8 @@ package server
 import (
 	"context"
 
-	"tages-go/internal/api"
-	"tages-go/internal/file"
+	"file-service/internal/api"
+	"file-service/internal/file"
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 )

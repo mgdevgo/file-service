@@ -13,11 +13,11 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	"tages-go/internal/api"
-	"tages-go/internal/ratelimit"
-	"tages-go/internal/server"
-	"tages-go/internal/service"
-	"tages-go/internal/storage/postgres"
+	"file-service/internal/api"
+	"file-service/internal/ratelimit"
+	"file-service/internal/server"
+	"file-service/internal/service"
+	"file-service/internal/storage/postgres"
 )
 
 func main() {
