@@ -26,7 +26,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	db, err := postgres.New(context.Background(), "postgres://postgres:postgres@localhost:5432/postgres")
+	db, err := postgres.New(ctx, os.Getenv("DATABASE_URL"))
 	if err != nil {
 		logger.Error("failed to connect to database", "error", err)
 		os.Exit(1)
@@ -36,7 +36,7 @@ func main() {
 	transaction := tx.Must(pgxtx.NewDefaultFactory(db))
 
 	metaStorage := postgres.NewFileMetaStorage(db, pgxtx.DefaultCtxGetter, logger)
-	fileService := service.NewDiskFileService("./storage", metaStorage, transaction, logger)
+	fileService := service.NewDiskFileService(os.Getenv("STORAGE_PATH"), metaStorage, transaction, logger)
 
 	fileServer := server.NewFileServer(fileService)
 	limiter := ratelimit.NewRequestLimiter()

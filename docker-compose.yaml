@@ -1,19 +1,22 @@
 services:
-  file-service:
+  fs-api:
     image: file-service:latest
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    environment:
-      - POSTGRES_URL=postgres://postgres:postgres@file-service-db:5432/postgres
     restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@fs-db:5432/postgres
+      - STORAGE_PATH=/storage
+    volumes:
+      - ./docker/fs-api-storage:/storage
     depends_on:
-      file-service-db:
+      fs-db:
         condition: service_healthy
 
-  file-service-db:
+  fs-db:
     image: postgres:latest
     ports:
       - "5432:5432"
@@ -23,7 +26,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
     volumes:
-      - ./docker/postgres_data:/var/lib/postgresql/data
+      - ./docker/fs-db-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres", "-d", "postgres"]
       interval: 10s
