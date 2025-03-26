@@ -20,12 +20,14 @@ func NewFileServer(fileService file.FileService) *FileServer {
 }
 
 func (s *FileServer) UploadFile(ctx context.Context, request *api.UploadFileRequest) (*api.UploadFileResponse, error) {
-	err := s.fileService.UploadFile(ctx, request.Filename, request.Data)
+	id, err := s.fileService.UploadFile(ctx, request.Filename, request.Data)
 	if err != nil {
 		return nil, err
 	}
 
-	return &api.UploadFileResponse{}, nil
+	return &api.UploadFileResponse{
+		FileId: id,
+	}, nil
 }
 
 func (s *FileServer) DownloadFile(ctx context.Context, request *api.DownloadFileRequest) (*api.DownloadFileResponse, error) {

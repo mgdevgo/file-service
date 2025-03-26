@@ -39,7 +39,7 @@ func NewDiskFileService(storagePath string, metaRepo file.FileMetaRepository, tr
 	}
 }
 
-func (service *DiskFileService) UploadFile(ctx context.Context, fileName string, fileData []byte) error {
+func (service *DiskFileService) UploadFile(ctx context.Context, fileName string, fileData []byte) (string, error) {
 	meta := file.NewFileMeta(uuid.New(), fileName, fileData)
 	file := file.NewFile(fileData, meta)
 
@@ -58,10 +58,10 @@ func (service *DiskFileService) UploadFile(ctx context.Context, fileName string,
 	)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	return file.Meta.ID.String(), nil
 }
 
 func (service *DiskFileService) writeToDisk(ctx context.Context, file *file.File) error {
