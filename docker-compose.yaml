@@ -9,9 +9,9 @@ services:
     restart: unless-stopped
     environment:
       - DATABASE_URL=postgres://postgres:postgres@fs-db:5432/postgres
-      - STORAGE_PATH=/storage
+      - FILES_UPLOAD_PATH=/uploads
     volumes:
-      - ./docker/fs-api-storage:/storage
+      - ./docker/fs-api-data:/uploads
     depends_on:
       fs-db:
         condition: service_healthy
