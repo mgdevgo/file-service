@@ -9,6 +9,7 @@ package api
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -21,7 +22,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type UploadRequest struct {
+type UploadFileRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Filename      string                 `protobuf:"bytes,1,opt,name=filename,proto3" json:"filename,omitempty"`
 	Data          []byte                 `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
@@ -29,20 +30,20 @@ type UploadRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UploadRequest) Reset() {
-	*x = UploadRequest{}
+func (x *UploadFileRequest) Reset() {
+	*x = UploadFileRequest{}
 	mi := &file_api_file_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UploadRequest) String() string {
+func (x *UploadFileRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UploadRequest) ProtoMessage() {}
+func (*UploadFileRequest) ProtoMessage() {}
 
-func (x *UploadRequest) ProtoReflect() protoreflect.Message {
+func (x *UploadFileRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_file_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -54,46 +55,46 @@ func (x *UploadRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UploadRequest.ProtoReflect.Descriptor instead.
-func (*UploadRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use UploadFileRequest.ProtoReflect.Descriptor instead.
+func (*UploadFileRequest) Descriptor() ([]byte, []int) {
 	return file_api_file_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *UploadRequest) GetFilename() string {
+func (x *UploadFileRequest) GetFilename() string {
 	if x != nil {
 		return x.Filename
 	}
 	return ""
 }
 
-func (x *UploadRequest) GetData() []byte {
+func (x *UploadFileRequest) GetData() []byte {
 	if x != nil {
 		return x.Data
 	}
 	return nil
 }
 
-type UploadResponse struct {
+type UploadFileResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FileId        string                 `protobuf:"bytes,1,opt,name=file_id,json=fileId,proto3" json:"file_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UploadResponse) Reset() {
-	*x = UploadResponse{}
+func (x *UploadFileResponse) Reset() {
+	*x = UploadFileResponse{}
 	mi := &file_api_file_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UploadResponse) String() string {
+func (x *UploadFileResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UploadResponse) ProtoMessage() {}
+func (*UploadFileResponse) ProtoMessage() {}
 
-func (x *UploadResponse) ProtoReflect() protoreflect.Message {
+func (x *UploadFileResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_file_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -105,19 +106,19 @@ func (x *UploadResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UploadResponse.ProtoReflect.Descriptor instead.
-func (*UploadResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use UploadFileResponse.ProtoReflect.Descriptor instead.
+func (*UploadFileResponse) Descriptor() ([]byte, []int) {
 	return file_api_file_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *UploadResponse) GetFileId() string {
+func (x *UploadFileResponse) GetFileId() string {
 	if x != nil {
 		return x.FileId
 	}
 	return ""
 }
 
-type ViewRequest struct {
+type ViewFilesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Limit         uint32                 `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
 	Offset        uint32                 `protobuf:"varint,2,opt,name=offset,proto3" json:"offset,omitempty"`
@@ -125,20 +126,20 @@ type ViewRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ViewRequest) Reset() {
-	*x = ViewRequest{}
+func (x *ViewFilesRequest) Reset() {
+	*x = ViewFilesRequest{}
 	mi := &file_api_file_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ViewRequest) String() string {
+func (x *ViewFilesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ViewRequest) ProtoMessage() {}
+func (*ViewFilesRequest) ProtoMessage() {}
 
-func (x *ViewRequest) ProtoReflect() protoreflect.Message {
+func (x *ViewFilesRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_file_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -150,46 +151,46 @@ func (x *ViewRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ViewRequest.ProtoReflect.Descriptor instead.
-func (*ViewRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ViewFilesRequest.ProtoReflect.Descriptor instead.
+func (*ViewFilesRequest) Descriptor() ([]byte, []int) {
 	return file_api_file_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ViewRequest) GetLimit() uint32 {
+func (x *ViewFilesRequest) GetLimit() uint32 {
 	if x != nil {
 		return x.Limit
 	}
 	return 0
 }
 
-func (x *ViewRequest) GetOffset() uint32 {
+func (x *ViewFilesRequest) GetOffset() uint32 {
 	if x != nil {
 		return x.Offset
 	}
 	return 0
 }
 
-type ViewResponse struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Files         []*ViewResponse_FileInfo `protobuf:"bytes,1,rep,name=files,proto3" json:"files,omitempty"`
+type ViewFilesResponse struct {
+	state         protoimpl.MessageState        `protogen:"open.v1"`
+	Files         []*ViewFilesResponse_FileInfo `protobuf:"bytes,1,rep,name=files,proto3" json:"files,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ViewResponse) Reset() {
-	*x = ViewResponse{}
+func (x *ViewFilesResponse) Reset() {
+	*x = ViewFilesResponse{}
 	mi := &file_api_file_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ViewResponse) String() string {
+func (x *ViewFilesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ViewResponse) ProtoMessage() {}
+func (*ViewFilesResponse) ProtoMessage() {}
 
-func (x *ViewResponse) ProtoReflect() protoreflect.Message {
+func (x *ViewFilesResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_file_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -201,39 +202,39 @@ func (x *ViewResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ViewResponse.ProtoReflect.Descriptor instead.
-func (*ViewResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ViewFilesResponse.ProtoReflect.Descriptor instead.
+func (*ViewFilesResponse) Descriptor() ([]byte, []int) {
 	return file_api_file_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ViewResponse) GetFiles() []*ViewResponse_FileInfo {
+func (x *ViewFilesResponse) GetFiles() []*ViewFilesResponse_FileInfo {
 	if x != nil {
 		return x.Files
 	}
 	return nil
 }
 
-type DownloadRequest struct {
+type DownloadFileRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FileId        string                 `protobuf:"bytes,1,opt,name=file_id,json=fileId,proto3" json:"file_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DownloadRequest) Reset() {
-	*x = DownloadRequest{}
+func (x *DownloadFileRequest) Reset() {
+	*x = DownloadFileRequest{}
 	mi := &file_api_file_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DownloadRequest) String() string {
+func (x *DownloadFileRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DownloadRequest) ProtoMessage() {}
+func (*DownloadFileRequest) ProtoMessage() {}
 
-func (x *DownloadRequest) ProtoReflect() protoreflect.Message {
+func (x *DownloadFileRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_file_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -245,19 +246,19 @@ func (x *DownloadRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DownloadRequest.ProtoReflect.Descriptor instead.
-func (*DownloadRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use DownloadFileRequest.ProtoReflect.Descriptor instead.
+func (*DownloadFileRequest) Descriptor() ([]byte, []int) {
 	return file_api_file_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *DownloadRequest) GetFileId() string {
+func (x *DownloadFileRequest) GetFileId() string {
 	if x != nil {
 		return x.FileId
 	}
 	return ""
 }
 
-type DownloadResponse struct {
+type DownloadFileResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Data          []byte                 `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 	Filename      string                 `protobuf:"bytes,2,opt,name=filename,proto3" json:"filename,omitempty"`
@@ -265,20 +266,20 @@ type DownloadResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DownloadResponse) Reset() {
-	*x = DownloadResponse{}
+func (x *DownloadFileResponse) Reset() {
+	*x = DownloadFileResponse{}
 	mi := &file_api_file_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DownloadResponse) String() string {
+func (x *DownloadFileResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DownloadResponse) ProtoMessage() {}
+func (*DownloadFileResponse) ProtoMessage() {}
 
-func (x *DownloadResponse) ProtoReflect() protoreflect.Message {
+func (x *DownloadFileResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_file_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -290,48 +291,48 @@ func (x *DownloadResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DownloadResponse.ProtoReflect.Descriptor instead.
-func (*DownloadResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use DownloadFileResponse.ProtoReflect.Descriptor instead.
+func (*DownloadFileResponse) Descriptor() ([]byte, []int) {
 	return file_api_file_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *DownloadResponse) GetData() []byte {
+func (x *DownloadFileResponse) GetData() []byte {
 	if x != nil {
 		return x.Data
 	}
 	return nil
 }
 
-func (x *DownloadResponse) GetFilename() string {
+func (x *DownloadFileResponse) GetFilename() string {
 	if x != nil {
 		return x.Filename
 	}
 	return ""
 }
 
-type ViewResponse_FileInfo struct {
+type ViewFilesResponse_FileInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Filename      string                 `protobuf:"bytes,1,opt,name=filename,proto3" json:"filename,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,3,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ViewResponse_FileInfo) Reset() {
-	*x = ViewResponse_FileInfo{}
+func (x *ViewFilesResponse_FileInfo) Reset() {
+	*x = ViewFilesResponse_FileInfo{}
 	mi := &file_api_file_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ViewResponse_FileInfo) String() string {
+func (x *ViewFilesResponse_FileInfo) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ViewResponse_FileInfo) ProtoMessage() {}
+func (*ViewFilesResponse_FileInfo) ProtoMessage() {}
 
-func (x *ViewResponse_FileInfo) ProtoReflect() protoreflect.Message {
+func (x *ViewFilesResponse_FileInfo) ProtoReflect() protoreflect.Message {
 	mi := &file_api_file_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -343,62 +344,63 @@ func (x *ViewResponse_FileInfo) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ViewResponse_FileInfo.ProtoReflect.Descriptor instead.
-func (*ViewResponse_FileInfo) Descriptor() ([]byte, []int) {
+// Deprecated: Use ViewFilesResponse_FileInfo.ProtoReflect.Descriptor instead.
+func (*ViewFilesResponse_FileInfo) Descriptor() ([]byte, []int) {
 	return file_api_file_proto_rawDescGZIP(), []int{3, 0}
 }
 
-func (x *ViewResponse_FileInfo) GetFilename() string {
+func (x *ViewFilesResponse_FileInfo) GetFilename() string {
 	if x != nil {
 		return x.Filename
 	}
 	return ""
 }
 
-func (x *ViewResponse_FileInfo) GetCreatedAt() string {
+func (x *ViewFilesResponse_FileInfo) GetCreatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreatedAt
 	}
-	return ""
+	return nil
 }
 
-func (x *ViewResponse_FileInfo) GetUpdatedAt() string {
+func (x *ViewFilesResponse_FileInfo) GetUpdatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdatedAt
 	}
-	return ""
+	return nil
 }
 
 var File_api_file_proto protoreflect.FileDescriptor
 
 const file_api_file_proto_rawDesc = "" +
 	"\n" +
-	"\x0eapi/file.proto\x12\x04file\"?\n" +
-	"\rUploadRequest\x12\x1a\n" +
+	"\x0eapi/file.proto\x12\x04file\x1a\x1fgoogle/protobuf/timestamp.proto\"C\n" +
+	"\x11UploadFileRequest\x12\x1a\n" +
 	"\bfilename\x18\x01 \x01(\tR\bfilename\x12\x12\n" +
-	"\x04data\x18\x02 \x01(\fR\x04data\")\n" +
-	"\x0eUploadResponse\x12\x17\n" +
-	"\afile_id\x18\x01 \x01(\tR\x06fileId\";\n" +
-	"\vViewRequest\x12\x14\n" +
+	"\x04data\x18\x02 \x01(\fR\x04data\"-\n" +
+	"\x12UploadFileResponse\x12\x17\n" +
+	"\afile_id\x18\x01 \x01(\tR\x06fileId\"@\n" +
+	"\x10ViewFilesRequest\x12\x14\n" +
 	"\x05limit\x18\x01 \x01(\rR\x05limit\x12\x16\n" +
-	"\x06offset\x18\x02 \x01(\rR\x06offset\"\xa7\x01\n" +
-	"\fViewResponse\x121\n" +
-	"\x05files\x18\x01 \x03(\v2\x1b.file.ViewResponse.FileInfoR\x05files\x1ad\n" +
+	"\x06offset\x18\x02 \x01(\rR\x06offset\"\xea\x01\n" +
+	"\x11ViewFilesResponse\x126\n" +
+	"\x05files\x18\x01 \x03(\v2 .file.ViewFilesResponse.FileInfoR\x05files\x1a\x9c\x01\n" +
 	"\bFileInfo\x12\x1a\n" +
-	"\bfilename\x18\x01 \x01(\tR\bfilename\x12\x1d\n" +
+	"\bfilename\x18\x01 \x01(\tR\bfilename\x129\n" +
 	"\n" +
-	"created_at\x18\x02 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x03 \x01(\tR\tupdatedAt\"*\n" +
-	"\x0fDownloadRequest\x12\x17\n" +
-	"\afile_id\x18\x01 \x01(\tR\x06fileId\"B\n" +
-	"\x10DownloadResponse\x12\x12\n" +
+	"updated_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\".\n" +
+	"\x13DownloadFileRequest\x12\x17\n" +
+	"\afile_id\x18\x01 \x01(\tR\x06fileId\"F\n" +
+	"\x14DownloadFileResponse\x12\x12\n" +
 	"\x04data\x18\x01 \x01(\fR\x04data\x12\x1a\n" +
-	"\bfilename\x18\x02 \x01(\tR\bfilename2\xac\x01\n" +
-	"\vFileService\x123\n" +
-	"\x06Upload\x12\x13.file.UploadRequest\x1a\x14.file.UploadResponse\x12-\n" +
-	"\x04View\x12\x11.file.ViewRequest\x1a\x12.file.ViewResponse\x129\n" +
-	"\bDownload\x12\x15.file.DownloadRequest\x1a\x16.file.DownloadResponseB\x10Z\x0e./internal/apib\x06proto3"
+	"\bfilename\x18\x02 \x01(\tR\bfilename2\xd3\x01\n" +
+	"\vFileService\x12?\n" +
+	"\n" +
+	"UploadFile\x12\x17.file.UploadFileRequest\x1a\x18.file.UploadFileResponse\x12<\n" +
+	"\tViewFiles\x12\x16.file.ViewFilesRequest\x1a\x17.file.ViewFilesResponse\x12E\n" +
+	"\fDownloadFile\x12\x19.file.DownloadFileRequest\x1a\x1a.file.DownloadFileResponseB\x10Z\x0e./internal/apib\x06proto3"
 
 var (
 	file_api_file_proto_rawDescOnce sync.Once
@@ -414,27 +416,30 @@ func file_api_file_proto_rawDescGZIP() []byte {
 
 var file_api_file_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_api_file_proto_goTypes = []any{
-	(*UploadRequest)(nil),         // 0: file.UploadRequest
-	(*UploadResponse)(nil),        // 1: file.UploadResponse
-	(*ViewRequest)(nil),           // 2: file.ViewRequest
-	(*ViewResponse)(nil),          // 3: file.ViewResponse
-	(*DownloadRequest)(nil),       // 4: file.DownloadRequest
-	(*DownloadResponse)(nil),      // 5: file.DownloadResponse
-	(*ViewResponse_FileInfo)(nil), // 6: file.ViewResponse.FileInfo
+	(*UploadFileRequest)(nil),          // 0: file.UploadFileRequest
+	(*UploadFileResponse)(nil),         // 1: file.UploadFileResponse
+	(*ViewFilesRequest)(nil),           // 2: file.ViewFilesRequest
+	(*ViewFilesResponse)(nil),          // 3: file.ViewFilesResponse
+	(*DownloadFileRequest)(nil),        // 4: file.DownloadFileRequest
+	(*DownloadFileResponse)(nil),       // 5: file.DownloadFileResponse
+	(*ViewFilesResponse_FileInfo)(nil), // 6: file.ViewFilesResponse.FileInfo
+	(*timestamppb.Timestamp)(nil),      // 7: google.protobuf.Timestamp
 }
 var file_api_file_proto_depIdxs = []int32{
-	6, // 0: file.ViewResponse.files:type_name -> file.ViewResponse.FileInfo
-	0, // 1: file.FileService.Upload:input_type -> file.UploadRequest
-	2, // 2: file.FileService.View:input_type -> file.ViewRequest
-	4, // 3: file.FileService.Download:input_type -> file.DownloadRequest
-	1, // 4: file.FileService.Upload:output_type -> file.UploadResponse
-	3, // 5: file.FileService.View:output_type -> file.ViewResponse
-	5, // 6: file.FileService.Download:output_type -> file.DownloadResponse
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	6, // 0: file.ViewFilesResponse.files:type_name -> file.ViewFilesResponse.FileInfo
+	7, // 1: file.ViewFilesResponse.FileInfo.created_at:type_name -> google.protobuf.Timestamp
+	7, // 2: file.ViewFilesResponse.FileInfo.updated_at:type_name -> google.protobuf.Timestamp
+	0, // 3: file.FileService.UploadFile:input_type -> file.UploadFileRequest
+	2, // 4: file.FileService.ViewFiles:input_type -> file.ViewFilesRequest
+	4, // 5: file.FileService.DownloadFile:input_type -> file.DownloadFileRequest
+	1, // 6: file.FileService.UploadFile:output_type -> file.UploadFileResponse
+	3, // 7: file.FileService.ViewFiles:output_type -> file.ViewFilesResponse
+	5, // 8: file.FileService.DownloadFile:output_type -> file.DownloadFileResponse
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_api_file_proto_init() }
