@@ -1,5 +1,5 @@
 run:
-	go run cmd/tages/main.go
+	go run cmd/file-service/main.go
 
 generate:
 	easyp generate

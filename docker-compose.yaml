@@ -1,0 +1,31 @@
+services:
+  file-service:
+    image: file-service:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - POSTGRES_URL=postgres://postgres:postgres@file-service-db:5432/postgres
+    restart: unless-stopped
+    depends_on:
+      file-service-db:
+        condition: service_healthy
+
+  file-service-db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./docker/postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
