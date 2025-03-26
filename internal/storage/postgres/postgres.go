@@ -37,6 +37,10 @@ func New(ctx context.Context, URL string, migrationsPath string) (*pgxpool.Pool,
 
 func applyMigrations(URL string, migrationsPath string) error {
 	const op = "storage.postgres.applyMigrations"
+	if migrationsPath == "" {
+		migrationsPath = "migrations"
+	}
+
 	m, err := migrate.New(
 		"file://"+migrationsPath,
 		strings.Replace(URL, "postgres://", "pgx5://", 1),
