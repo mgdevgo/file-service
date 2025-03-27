@@ -1,4 +1,4 @@
-FROM golang:1.20-alpine as builder
+FROM golang:alpine AS builder
 
 WORKDIR /app
 
@@ -11,5 +11,9 @@ RUN go build -o file-service cmd/file-service/main.go
 FROM alpine:latest
 
 COPY --from=builder /app/file-service /app/file-service
+
+COPY migrations /app/migrations
+
+WORKDIR /app
 
 CMD ["./file-service"]

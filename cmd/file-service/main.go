@@ -12,7 +12,6 @@ import (
 	tx "github.com/avito-tech/go-transaction-manager/trm/v2/manager"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery"
-	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
@@ -28,9 +27,9 @@ import (
 func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
-	if err := godotenv.Load(); err != nil {
-		logger.Error("failed to load .env file", "error", err)
-	}
+	// if err := godotenv.Load(); err != nil {
+	// 	logger.Error("failed to load .env file", "error", err)
+	// }
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
