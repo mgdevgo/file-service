@@ -10,9 +10,13 @@ import (
 
 	pgxtx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	tx "github.com/avito-tech/go-transaction-manager/trm/v2/manager"
+	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
+	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery"
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
+	"google.golang.org/grpc/status"
 
 	"file-service/internal/api"
 	"file-service/internal/ratelimit"
@@ -51,7 +55,21 @@ func main() {
 	limiter := ratelimit.NewRequestLimiter()
 	server := grpc.NewServer(
 		grpc.ChainUnaryInterceptor(
-			// logging.UnaryServerInterceptor(InterceptorLogger(logger), opts...),)
+			recovery.UnaryServerInterceptor(
+				recovery.WithRecoveryHandler(
+					func(p any) (err error) {
+						logger.Error("Recovered from panic", slog.Any("panic", p))
+						return status.Errorf(codes.Internal, "internal error")
+					}),
+			),
+			logging.UnaryServerInterceptor(
+				logging.LoggerFunc(
+					func(ctx context.Context, lvl logging.Level, msg string, fields ...any) {
+						logger.Log(ctx, slog.Level(lvl), msg, fields...)
+					},
+				),
+				logging.WithLogOnEvents(logging.PayloadReceived, logging.PayloadSent),
+			),
 			limiter.UnaryInterceptor,
 		),
 	)
