@@ -83,9 +83,45 @@ func TestFileServer_UploadFile(t *testing.T) {
 	}
 }
 
-func TestFileServer_DownloadFile(t *testing.T) {}
+func TestFileServer_DownloadFile(t *testing.T) {
+	client := setupTest(t)
 
-func TestFileServer_ViewFiles(t *testing.T) {}
+	testImage, err := os.ReadFile("../../testdata/test_image.jpg")
+	require.NoError(t, err)
+
+	uploadResponse, err := client.UploadFile(context.Background(), &api.UploadFileRequest{
+		Filename: "test_image.jpg",
+		Data:     testImage,
+	})
+	require.NoError(t, err)
+
+	response, err := client.DownloadFile(context.Background(), &api.DownloadFileRequest{
+		FileId: uploadResponse.FileId,
+	})
+	require.NoError(t, err)
+	require.NotEmpty(t, response.Data)
+	require.Equal(t, testImage, response.Data)
+}
+
+func TestFileServer_ViewFiles(t *testing.T) {
+	client := setupTest(t)
+
+	testImage, err := os.ReadFile("../../testdata/test_image.jpg")
+	require.NoError(t, err)
+
+	_, err = client.UploadFile(context.Background(), &api.UploadFileRequest{
+		Filename: "test_image.jpg",
+		Data:     testImage,
+	})
+	require.NoError(t, err)
+
+	response, err := client.ViewFiles(context.Background(), &api.ViewFilesRequest{
+		Offset: 0,
+		Limit:  10,
+	})
+	require.NoError(t, err)
+	require.NotEmpty(t, response.Files)
+}
 
 func setupTest(t *testing.T) api.FileServiceClient {
 	t.Helper()
@@ -144,4 +180,3 @@ func setupTest(t *testing.T) api.FileServiceClient {
 
 	return client
 }
-
