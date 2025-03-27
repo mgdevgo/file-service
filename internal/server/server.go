@@ -77,7 +77,7 @@ func (s *FileServer) DownloadFile(ctx context.Context, request *api.DownloadFile
 }
 
 func (s *FileServer) ViewFiles(ctx context.Context, request *api.ViewFilesRequest) (*api.ViewFilesResponse, error) {
-	files, err := s.fileService.ViewFilesMetadata(ctx)
+	files, err := s.fileService.ViewFilesMetadata(ctx, file.NewPage(int(request.Offset), int(request.Limit)))
 	if err != nil {
 		return nil, err
 	}

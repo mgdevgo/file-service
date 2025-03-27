@@ -119,8 +119,8 @@ func (service *DiskFileService) DownloadFile(ctx context.Context, fileId string)
 	return meta.Filename, data, nil
 }
 
-func (service *DiskFileService) ViewFilesMetadata(ctx context.Context) ([]*file.FileMeta, error) {
-	files, err := service.meta.FindAll(ctx, file.Page{})
+func (service *DiskFileService) ViewFilesMetadata(ctx context.Context, page file.Page) ([]*file.FileMeta, error) {
+	files, err := service.meta.FindAll(ctx, page)
 	if err != nil {
 		return nil, err
 	}
