@@ -55,10 +55,13 @@ func (limiter *RequestLimiter) UnaryInterceptor(
 	}
 
 	values := meta.Get("client-id")
-	if len(values) <= 0 {
+	if len(values) == 0 {
 		return nil, status.Error(codes.Unauthenticated, "client-id required")
 	}
 	clientId := values[0]
+	if clientId == "" {
+		return nil, status.Error(codes.Unauthenticated, "client-id required")
+	}
 
 	limiter.mutex.Lock()
 	activeRequests, ok := limiter.clients[clientId]
